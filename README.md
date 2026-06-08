@@ -2,9 +2,10 @@
 
 ## 🔗 Quick Links
 
-  📄 Final Report  
-[Open Report](report/final-report.docx)
-
+📄 Final Report  
+https://github.com/mbusavincent05-cloud/inventory-system/raw/main/report/final-report.docx
+📄 Final Report  
+[View Report](report/final-report.pdf)
 📸 Screenshots  
 [Login](screenshots/login.png)  
 [Dashboard](screenshots/dashboard.png)
