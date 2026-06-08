@@ -1,5 +1,4 @@
 <?php
-
 $conn =
 new mysqli(
 "localhost:3307",
@@ -14,5 +13,4 @@ if($conn->connect_error)
 }
 
 echo "Database Connected Successfully";
-
 ?>

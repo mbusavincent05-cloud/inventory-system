@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,4 +42,49 @@ function validateForm()
 </script>
 
 </body>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+<title>Validation</title>
+</head>
+
+<body>
+
+<form onsubmit="return validateForm()">
+
+    <label>Name</label><br>
+
+    <input type="text" id="name">
+
+    <br><br>
+
+    <button type="submit">
+        Submit
+    </button>
+
+</form>
+
+<script>
+
+function validateForm()
+{
+    var name =
+    document.getElementById("name").value;
+
+    if(name == "")
+    {
+        alert("Name cannot be empty");
+        return false;
+    }
+
+    alert("Form Submitted");
+
+    return true;
+}
+
+</script>
+
+</body>
+>>>>>>> cedd30dac97f3868e5367d7169ec120d0f186600
 </html>
