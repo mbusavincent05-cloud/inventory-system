@@ -12,3 +12,5 @@ https://github.com/mbusavincent05-cloud/inventory-system/raw/main/report/final-r
 - [🔐 Login Page Code](login.php)
 - [📊 Dashboard Code](dashboard.php)
 - [💾 Database Script](database/inventory_db.sql)
+
+https://1drv.ms/w/c/faa11c77d9a276c1/IQBjK5CIbpanSJi5StPJuiMgAVWgjBrzNm3X44mjTqPQq48?e=AVUnT9
