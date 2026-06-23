@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Bakery | Cake Training & Supplies</title>
+    <style>
+        /* --- DESIGN SYSTEM & CSS VARIABLES --- */
+        :root {
+            --primary: #ff7495;
+            --primary-dark: #e05374;
+            --secondary: #4a3b32;
+            --light-bg: #fff5f7;
+            --white: #ffffff;
+            --dark: #2d2520;
+            --gray: #666;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--border-radius);
+        }
+
+        section {
+            padding: 4rem 1.5rem;
+            scroll-margin-top: 70px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* --- MOBILE-FIRST NAVIGATION --- */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Menu checkbox hack for pure CSS mobile toggle */
+        .menu-toggle {
+            display: none;
+        }
+
+        .menu-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-button span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--secondary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--white);
+            flex-direction: column;
+            padding: 1rem 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .nav-links a {
+            padding: 1rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background-color: var(--light-bg);
+        }
+
+        /* Toggle logic using CSS standard sibling selectors */
+        .menu-toggle:checked ~ .nav-links {
+            display: flex;
+        }
+
+        .menu-toggle:checked ~ .menu-button span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .menu-toggle:checked ~ .menu-button span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle:checked ~ .menu-button span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* --- HOME PAGE (HERO) --- */
+        #home {
+            background-color: var(--light-bg);
+            text-align: center;
+            padding: 5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        /* --- ABOUT US --- */
+        #about .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* --- PRODUCTS PAGE (GRID) --- */
+        #products {
+            background-color: var(--light-bg);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .product-info .btn {
+            margin-top: auto;
+            text-align: center;
+        }
+
+        /* --- TRAINING SERVICES (FLEXBOX) --- */
+        .services-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--white);
+            border: 2px solid var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* --- CONTACT PAGE --- */
+        #contact {
+            background-color: var(--light-bg);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .info-item h3 {
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--secondary);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- TABLET BREAKPOINT (768px) --- */
+        @media (min-width: 768px) {
+            .section-title { font-size: 2.5rem; }
+            .hero-content h1 { font-size: 3.5rem; }
+
+            #about .about-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-flex {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .service-card {
+                flex: 1 1 calc(50% - 1rem);
+            }
+        }
+
+        /* --- DESKTOP BREAKPOINT (1024px) --- */
+        @media (min-width: 1024px) {
+            /* Desktop Navigation */
+            .menu-button { display: none; }
+            
+            .nav-links {
+                display: flex !important;
+                position: static;
+                flex-direction: row;
+                box-shadow: none;
+                padding: 0;
+                width: auto;
+            }
+
+            .nav-links a {
+                padding: 0.5rem 1.5rem;
+            }
+
+            .nav-links a:hover {
+                background-color: transparent;
+            }
+
+            /* Layout Layouts */
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .services-flex {
+                flex-wrap: nowrap;
+            }
+
+            .service-card {
+                flex: 1;
+            }
+
+            .contact-grid {
+                grid-template-columns: 3fr 2fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo">🍰 Hot Bakery</a>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#products">Products</a>
+                <a href="#services">Training</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container hero-content">
+            <h1>Baking My Future</h1>
+            <p>Premium baking supplies and expert-led training classes for aspiring bakers and professionals alike.</p>
+            <a href="#services" class="btn">Explore Classes</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Baking Class Session">
+                </div>
+                <div class="about-text">
+                    <h3>Crafting Bakers Since 2018</h3>
+                    <p>At Hot Bakery, we believe anyone can master the art of baking. What started as a small local kitchen workshop has grown into a leading supply depot and certified training ground.</p>
+                    <br>
+                    <p>Whether you're looking for professional-grade fondant, industrial stand mixers, or looking to master the elusive French Macaron, our expert pastry chefs are here to guide you every step of the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products">
+        <div class="container">
+            <h2 class="section-title">Superior Supplies</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1516685018646-549198525c1b?auto=format&fit=crop&w=400&q=80" alt="Organic Vanilla Extract">
+                    <div class="product-info">
+                        <h3>Madagascar Vanilla Extract</h3>
+                        <p class="product-price">$24.99</p>
+                        <p>Pure, cold-pressed premium double-fold vanilla extract for unmatched aroma.</p>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?auto=format&fit=crop&w=400&q=80" alt="Cake Decorating Tips Set">
+                    <div class="product-info">
+                        <h3>Pro Piping Nozzle Set</h3>
+                        <p class="product-price">$18.50</p>
+                        <p>24 stainless steel decorating tips including star, drop flower, and leaf styles.</p>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&q=80" alt="Premium Silicone Molds">
+                    <div class="product-info">
+                        <h3>Silicone Geometric Molds</h3>
+                        <p class="product-price">$15.00</p>
+                        <p>High-flexibility food-safe molds perfect for modern geometric mousse cakes.</p>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Training Programs</h2>
+            <div class="services-flex">
+                <div class="service-card">
+                    <div class="service-icon">👩‍🍳</div>
+                    <h3>Beginner Bootcamps</h3>
+                    <p>Learn the fundamental physics of baking, ingredient interactions, and simple, foolproof cake recipes from scratch.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Advanced Decoration</h3>
+                    <p>Master multi-tiered structures, modern sharp-edge buttercream techniques, and lifelike sugar flower crafting.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Baking Business 101</h3>
+                    <p>Turn your hobby into profit. Understand batch cost management, commercial kitchen regulations, and social media branding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contacting</h2>
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you! Your message has been simulated sent.');">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Inquiry</label>
+                            <textarea id="message" rows="5" required placeholder="Tell us about your baking goals or supply inquiries..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <h3>📍 Studio Address</h3>
+                        <p>123 Confectionery Way, Suite 400<br>Sugar Land, TX 77478</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>📞 Phone</h3>
+                        <p>+1 (555) 123-CAKE</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>✉️ Email</h3>
+                        <p>hello@hotbakerybaking.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Hot Bakery. All Rights Reserved. Crafted for beautiful bakes.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
