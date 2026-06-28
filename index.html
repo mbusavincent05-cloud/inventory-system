@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SweetArt | Cake Training & Supplies</title>
+    <style>
+        /* ==========================================
+           1. CORE DESIGN SYSTEM & RESETS (Mobile-First)
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #d4a373;      /* Warm Amber Gold */
+            --secondary: #faedcd;    /* Soft Cream */
+            --dark: #4a3728;         /* Deep Mocha Chocolate */
+            --light: #fefae0;        /* Ivory Accent */
+            --text-dark: #2b1f1d;
+            --text-light: #ffffff;
+            --bg-gray: #f9f6f0;
+            --transition: all 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-gray);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Utility Section Wrapper */
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--primary);
+            color: var(--text-light);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--dark);
+        }
+
+        /* ==========================================
+           2. RESPONSIVE NAVIGATION (Pure CSS Hack)
+           ========================================== */
+        header {
+            background-color: var(--dark);
+            color: var(--text-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--secondary);
+        }
+
+        /* Hamburger Icon CSS styling */
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .menu-btn span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Hide the Checkbox toggle mechanism */
+        #menu-toggle {
+            display: none;
+        }
+
+        /* Mobile Menu Triggers & Drawer Setup */
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark);
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-links li {
+            list-style: none;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Checkbox state changes mobile menu visibility */
+        #menu-toggle:checked ~ .nav-links {
+            display: flex;
+        }
+
+        #menu-toggle:checked ~ .menu-btn span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(2) {
+            opacity: 0;
+        }
+        #menu-toggle:checked ~ .menu-btn span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* ==========================================
+           3. PAGE SECTIONS (Flexbox & Grid Layouts)
+           ========================================== */
+
+        /* --- HOME HERO SECTION --- */
+        #home {
+            background: linear-gradient(rgba(74, 55, 40, 0.7), rgba(74, 55, 40, 0.85)), 
+                        url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop') no-repeat center center/cover;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 40px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- ABOUT US SECTION --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        /* --- PRODUCTS PAGE SECTION --- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--text-light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        /* --- TRAINING SERVICES PAGE --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--secondary);
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-details h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .service-meta {
+            margin: 15px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--primary);
+        }
+
+        /* --- CONTACT PAGE --- */
+        .contact-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .contact-info {
+            background-color: var(--dark);
+            color: var(--text-light);
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .contact-info h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .contact-method {
+            margin-bottom: 20px;
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 4px solid var(--primary);
+        }
+
+        /* ==========================================
+           4. RESPONSIVE BREAKPOINTS (Media Queries)
+           ========================================== */
+
+        /* TABLET LAYOUT BREAKPOINT */
+        @media (min-width: 768px) {
+            .section-title { font-size: 2.3rem; }
+            
+            /* Change Hero view sizing */
+            .hero-content h1 { font-size: 3.5rem; }
+
+            /* Grid Adjustments for Multi-column sections */
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-flex {
+                flex-direction: row;
+            }
+            .contact-info, .contact-form {
+                flex: 1;
+            }
+        }
+
+        /* DESKTOP LAYOUT BREAKPOINT */
+        @media (min-width: 1024px) {
+            /* Navigation adapts to horizontal row */
+            .menu-btn { display: none; }
+            
+            .nav-links {
+                display: flex !important;
+                flex-direction: row;
+                position: static;
+                width: auto;
+                padding: 0;
+                box-shadow: none;
+                background-color: transparent;
+            }
+
+            .nav-links li {
+                margin: 0 0 0 30px;
+            }
+
+            /* Complex structures for high resolutions */
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            section {
+                padding: 80px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER & NAVBAR -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">SweetArt Academy</div>
+            
+            <!-- Pure CSS Responsive Checkbox controller -->
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#services">Training</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. HOME SECTION -->
+        <section id="home">
+            <div class="hero-content">
+                <h1>Bake Your Dreams Into Reality</h1>
+                <p>Master professional baking techniques with hands-on classes and source premium grade decorating supplies all under one roof.</p>
+                <a href="#services" class="btn">Explore Classes</a>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT US SECTION -->
+        <section id="about">
+            <h2 class="section-title">About Our Academy</h2>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop" alt="Baking instructor showing students techniques">
+                </div>
+                <div class="about-text">
+                    <h3>Emporing Bakers Since 2018</h3>
+                    <p>SweetArt Academy was founded with a singular vision: to bridge the gap between creative passion and professional technique. We supply raw commercial-grade kitchen equipment alongside industry-standard practical execution tutorials.</p>
+                    <p>Whether you are a novice learning to crack your first egg or an expert confectioner refining intricate sugar flower models, our state-of-the-art training room offers tailored curriculums for every skill grade.</p>
+                    <a href="#contact" class="btn">Meet the Team</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PRODUCTS PAGE SECTION -->
+        <section id="products">
+            <h2 class="section-title">Baking Supplies Catalog</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?q=80&w=400&auto=format&fit=crop" alt="Premium Turntable">
+                    <div class="product-info">
+                        <h3>Aluminum Revolving Turntable</h3>
+                        <p>Ultra-smooth heavy duty continuous bearings for flawless level icing execution.</p>
+                        <div class="product-price">$45.00</div>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?q=80&w=400&auto=format&fit=crop" alt="Piping Nozzles">
+                    <div class="product-info">
+                        <h3>Master Piping Nozzle Kit (24pc)</h3>
+                        <p>Stainless steel seamless laser-cut tips featuring stars, leaves, and flower drops.</p>
+                        <div class="product-price">$22.50</div>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1534432182912-638631158f06?q=80&w=400&auto=format&fit=crop" alt="Silicone Molds">
+                    <div class="product-info">
+                        <h3>Geometric Fondant Silicone Molds</h3>
+                        <p>High tear-resistance food grade molds for intricate borders and chocolate geometric motifs.</p>
+                        <div class="product-price">$14.99</div>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=400&auto=format&fit=crop" alt="Gel Colors">
+                    <div class="product-info">
+                        <h3>Vibrant Gel Concentrated Food Color</h3>
+                        <p>High stability saturation pigment that maintains batter consistency without weakening meringue structure.</p>
+                        <div class="product-price">$18.00</div>
+                        <button class="btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TRAINING SERVICES PAGE SECTION -->
+        <section id="services">
+            <h2 class="section-title">Our Masterclasses</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-details">
+                        <h3>Foundation Baking Masterclass</h3>
+                        <p>Learn the foundational science of leavening, batter scaling, and reliable baking times across standard ovens.</p>
+                        <div class="service-meta">Duration: 2 Weeks | Novice Level</div>
+                    </div>
+                    <button class="btn">Book Seat</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-details">
+                        <h3>Advanced Sugarcraft & Sculpting</h3>
+                        <p>Dive deep into tiered internal structural support construction, clean fondant draping, and realistic gum paste floral arrangements.</p>
+                        <div class="service-meta">Duration: 4 Weeks | Intermediate</div>
+                    </div>
+                    <button class="btn">Book Seat</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-details">
+                        <h3>The Pastry Business Blueprint</h3>
+                        <p>Transition from a hobbyist to a business owner. Covers recipe costing scales, cold-chain transport setups, and commercial marketing strategies.</p>
+                        <div class="service-meta">Duration: 3 Days | Enterprise Focus</div>
+                    </div>
+                    <button class="btn">Book Seat</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT PAGE SECTION -->
+        <section id="contact">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-flex">
+                <div class="contact-info">
+                    <h3>Headquarters & Showroom</h3>
+                    <div class="contact-method">
+                        <strong>📍 Address:</strong>
+                        <p>102 Baker's Avenue, Suite A, Culinary District</p>
+                    </div>
+                    <div class="contact-method">
+                        <strong>📞 Phone / WhatsApp:</strong>
+                        <p>+254 712 345 678</p>
+                    </div>
+                    <div class="contact-method">
+                        <strong>✉️ Email inquiries:</strong>
+                        <p>hello@sweetartacademy.com</p>
+                    </div>
+                    <div class="contact-method">
+                        <strong>⏰ Operating Hours:</strong>
+                        <p>Mon - Sat: 8:00 AM - 5:30 PM<br>Sundays: Closed</p>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Inquiry Sent Successfully!');">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">Primary Interest</label>
+                            <input type="text" id="interest" placeholder="e.g., Advanced Sugarcraft Class / Wholesales Tools">
+                        </div>
+                        <div class="form-group">
+                            <label for="msg">Message Details</label>
+                            <textarea id="msg" required placeholder="How can our chefs help you today?"></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 SweetArt Academy & Supplies. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

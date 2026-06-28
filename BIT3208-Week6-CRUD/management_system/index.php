@@ -75,7 +75,7 @@ if (isset($_GET['edit_book'])) {
 </head>
 <body>
 
-    <h1 style="text-align:center; color:#222;">Dual Management Panel (phpMyAdmin Backed)</h1>
+    <h1 style="text-align:center; color:#222;">Management System</h1>
     <hr><br>
 
     <div class="container">

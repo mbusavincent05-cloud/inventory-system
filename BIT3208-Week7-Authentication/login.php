@@ -1,36 +1,47 @@
 <?php
+// 1. Start the session at the very top of the file
 session_start();
-require_once 'config/db.php';
-$message = '';
 
-if (isset($_GET['msg']) && $_GET['msg'] == 'registered') {
-    $message = "Registration successful! Please login.";
-}
+// 2. Include database connection
+require_once 'config/db.php'; 
+
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    if (!empty($email) && !empty($password)) {
+        // Fetch the user by email
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
-        // Regenerate session ID for security against session fixation
-        session_regenerate_id(true);
-        
-        $_author_session['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
+        // 3. Verify password against the secure hash in the DB
+        if ($user && password_verify($password, $user['password'])) {
+            
+            // Security best practice: prevent session fixation
+            session_regenerate_id(true);
 
-        // Redirect based on role
-        if ($user['role'] == 'admin') header("Location: dashboards/admin.php");
-        elseif ($user['role'] == 'lecturer') header("Location: dashboards/lecturer.php");
-        else header("Location: dashboards/student.php");
-        exit;
-    } else {
-        $message = "Invalid email or password.";
-    }
+            // 4. SAVE DATA INTO THE SESSION
+            $_SESSION['user_id']   = $user['id'];
+            $_SESSION['username']  = $user['username'];
+            $_SESSION['user_role']  = $user['role']; // 'student', 'lecturer', or 'admin'
+
+            // 5. Role-Based Routing
+            if ($_SESSION['user_role'] === 'admin') {
+                header("Location: dashboards/admin_dashboard.php");
+            } elseif ($_SESSION['user_role'] === 'lecturer') {
+                header("Location: dashboards/lecturer_dashboard.php");
+            } else {
+                header("Location: dashboards/student_dashboard.php");
+            }
+            exit(); // Always stop script execution after a redirect
+            
+        } else {
+            $error = "Invalid email or password.";
+        }
+    } 
 }
 ?>
 <!DOCTYPE html>
